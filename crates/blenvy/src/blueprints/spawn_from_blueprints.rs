@@ -70,7 +70,7 @@ pub(crate) struct OriginalVisibility(Visibility);
 /// marker component, gets added to all children of a currently spawning blueprint instance, can be usefull to avoid manipulating still in progress entities
 pub struct BlueprintInstanceDisabled;
 
-#[derive(Event, Debug)]
+#[derive(Message, Debug)]
 pub enum BlueprintEvent {
     /// event fired when a blueprint instance has finished loading all of its assets & before it attempts spawning
     AssetsLoaded {
@@ -393,7 +393,7 @@ pub(crate) fn blueprints_check_assets_loading(
     >,
     asset_server: Res<AssetServer>,
     mut commands: Commands,
-    mut blueprint_events: EventWriter<BlueprintEvent>,
+    mut blueprint_events: MessageWriter<BlueprintEvent>,
 ) {
     for (entity, blueprint_info, mut assets_to_load) in blueprint_assets_to_load.iter_mut() {
         let mut all_loaded = true;
@@ -832,7 +832,7 @@ pub(crate) fn blueprints_finalize_instances(
     mut sub_blueprint_trackers: Query<&mut SubBlueprintsSpawnTracker, With<BlueprintInfo>>,
     spawning_blueprints: Query<&BlueprintSpawning>,
     all_children: Query<&Children>,
-    mut blueprint_events: EventWriter<BlueprintEvent>,
+    mut blueprint_events: MessageWriter<BlueprintEvent>,
     mut commands: Commands,
     // all_names: Query<&Name>
 ) {

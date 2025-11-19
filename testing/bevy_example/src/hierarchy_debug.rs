@@ -23,7 +23,7 @@ pub fn setup_hierarchy_debug(mut commands: Commands) {
             alpha: 1.0,
         }),
         // Set the justification of the Text
-        TextLayout::new_with_justify(JustifyText::Center),
+        TextLayout::new_with_justify(Justify::Center),
         // Set the style of the Node itself.
         Node {
             position_type: PositionType::Absolute,

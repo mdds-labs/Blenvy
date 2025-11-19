@@ -12,10 +12,10 @@ pub mod in_game_saving;
 pub use in_game_saving::*;
 
 use bevy::prelude::*;
-use blenvy::{LoadRequest, LoadingFinished, SavingRequest, SavingFinished};
+use blenvy::{LoadRequest, LoadingFinished, SavingFinished, SavingRequest};
 
 pub fn request_save(
-    mut save_requests: EventWriter<SavingRequest>,
+    mut save_requests: MessageWriter<SavingRequest>,
     keycode: Res<ButtonInput<KeyCode>>,
 
     current_state: Res<State<GameState>>,
@@ -33,7 +33,7 @@ pub fn request_save(
 }
 
 pub fn on_saving_finished(
-    mut saving_finished: EventReader<SavingFinished>,
+    mut saving_finished: MessageReader<SavingFinished>,
     mut next_game_state: ResMut<NextState<GameState>>,
 ) {
     for _ in saving_finished.read() {
@@ -42,7 +42,7 @@ pub fn on_saving_finished(
 }
 
 pub fn request_load(
-    mut load_requests: EventWriter<LoadRequest>,
+    mut load_requests: MessageWriter<LoadRequest>,
     keycode: Res<ButtonInput<KeyCode>>,
     current_state: Res<State<GameState>>,
     mut next_game_state: ResMut<NextState<GameState>>,
@@ -59,7 +59,7 @@ pub fn request_load(
 }
 
 pub fn on_loading_finished(
-    mut loading_finished: EventReader<LoadingFinished>,
+    mut loading_finished: MessageReader<LoadingFinished>,
     mut next_game_state: ResMut<NextState<GameState>>,
 ) {
     for _ in loading_finished.read() {

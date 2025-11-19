@@ -24,7 +24,6 @@ pub enum LoadingSet {
     Load,
 }
 
-
 #[derive(Component, Reflect, Debug, Default)]
 #[reflect(Component)]
 pub struct StaticEntitiesRoot;
@@ -41,10 +40,10 @@ impl Plugin for SaveLoadPlugin {
             .register_type::<Camera3dDepthTextureUsage>()
             .register_type::<ScreenSpaceTransmissionQuality>()
             .register_type::<StaticEntitiesStorage>()
-            .add_event::<SavingRequest>()
-            .add_event::<LoadingRequest>()
-            .add_event::<LoadingFinished>()
-            .add_event::<SavingFinished>()
+            .add_message::<SavingRequest>()
+            .add_message::<LoadingRequest>()
+            .add_message::<LoadingFinished>()
+            .add_message::<SavingFinished>()
             .configure_sets(
                 Update,
                 (LoadingSet::Load).chain().before(GltfBlueprintsSet::Spawn), //.before(GltfComponentsSet::Injection)

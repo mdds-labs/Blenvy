@@ -147,11 +147,11 @@ struct MyExtension {
 }
 
 impl MaterialExtension for MyExtension {
-    fn fragment_shader() -> ShaderRef {
+    fn fragment_shader() -> bevy::shader::ShaderRef {
         "shaders/extended_material.wgsl".into()
     }
 
-    fn deferred_fragment_shader() -> ShaderRef {
+    fn deferred_fragment_shader() -> bevy::shader::ShaderRef {
         "shaders/extended_material.wgsl".into()
     }
 }

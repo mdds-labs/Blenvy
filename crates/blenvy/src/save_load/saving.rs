@@ -9,11 +9,11 @@ use crate::{BlenvyConfig, BlueprintInfo, Dynamic, FromBlueprint, RootEntity, Spa
 
 use super::{DynamicEntitiesRoot, OriginalParent, StaticEntitiesRoot};
 
-#[derive(Event, Debug)]
+#[derive(Message, Debug)]
 pub struct SavingRequest {
     pub path: String,
 }
-#[derive(Event)]
+#[derive(Message)]
 pub struct SaveFinished; // TODO: merge the the events above
 
 /// resource that keeps track of the current save request
@@ -23,7 +23,7 @@ pub struct SavingRequested {
 }
 
 pub fn process_save_requests(
-    mut saving_requests: EventReader<SavingRequest>,
+    mut saving_requests: MessageReader<SavingRequest>,
     mut commands: Commands,
 ) {
     let mut save_path: String = "".into();
@@ -84,7 +84,7 @@ pub(crate) fn save_game(world: &mut World) {
     // info!("saving");
 
     let mut save_path: String = "".into();
-    let mut events = world.resource_mut::<Events<SavingRequest>>();
+    let mut events = world.resource_mut::<Messages<SavingRequest>>();
 
     for event in events.get_cursor().read(&events) {
         // info!("SAVE EVENT !! {:?}", event);
@@ -201,7 +201,7 @@ pub(crate) fn save_game(world: &mut World) {
 
 pub(crate) fn cleanup_save(
     needs_parent_reset: Query<(Entity, &OriginalParent)>,
-    mut saving_finished: EventWriter<SaveFinished>,
+    mut saving_finished: MessageWriter<SaveFinished>,
     mut commands: Commands,
 ) {
     for (entity, original_parent) in needs_parent_reset.iter() {

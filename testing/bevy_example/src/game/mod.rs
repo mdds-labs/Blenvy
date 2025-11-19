@@ -16,8 +16,8 @@ use bevy::{
     prelude::*,
     render::view::screenshot::{save_to_disk, Capturing, Screenshot},
     time::common_conditions::on_timer,
+    window::CursorIcon,
     window::SystemCursorIcon,
-    winit::cursor::CursorIcon,
 };
 
 use json_writer::to_json_string;
@@ -147,12 +147,12 @@ fn screenshot_saving(
     }
 }
 
-fn exit_game(mut app_exit_events: ResMut<Events<bevy::app::AppExit>>) {
-    app_exit_events.send(bevy::app::AppExit::Success);
+fn exit_game(mut app_exit_events: ResMut<Messages<bevy::app::AppExit>>) {
+    app_exit_events.write(bevy::app::AppExit::Success);
 }
 
 fn check_for_gltf_events(
-    mut blueprint_events: EventReader<BlueprintEvent>,
+    mut blueprint_events: MessageReader<BlueprintEvent>,
     all_names: Query<&Name>,
 ) {
     for event in blueprint_events.read() {

@@ -83,7 +83,7 @@ impl Plugin for BlueprintsPlugin {
             .insert_resource(AssetToBlueprintInstancesMapper {
                 untyped_id_to_blueprint_entity_ids: HashMap::new(),
             })
-            .add_event::<BlueprintEvent>()
+            .add_message::<BlueprintEvent>()
             .register_type::<BlueprintInfo>()
             .register_type::<MaterialInfo>()
             .register_type::<MaterialInfos>()
@@ -98,7 +98,7 @@ impl Plugin for BlueprintsPlugin {
             .register_type::<AnimationMarkers>()
             .register_type::<HashMap<u32, Vec<String>>>()
             .register_type::<HashMap<String, HashMap<u32, Vec<String>>>>()
-            .add_event::<AnimationMarkerReached>()
+            .add_message::<AnimationMarkerReached>()
             .register_type::<BlueprintAsset>()
             .register_type::<Vec<BlueprintAsset>>()
             .register_type::<Vec<String>>()

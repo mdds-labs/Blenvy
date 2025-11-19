@@ -87,7 +87,7 @@ fn move_movers(mut movers: Query<&mut Transform, With<Dynamic>>) {
     }
 }
 
-fn save_game(keycode: Res<ButtonInput<KeyCode>>, mut save_requests: EventWriter<SavingRequest>) {
+fn save_game(keycode: Res<ButtonInput<KeyCode>>, mut save_requests: MessageWriter<SavingRequest>) {
     if keycode.just_pressed(KeyCode::KeyS) {
         save_requests.write(SavingRequest {
             path: "scenes/save.scn.ron".into(),
@@ -95,7 +95,7 @@ fn save_game(keycode: Res<ButtonInput<KeyCode>>, mut save_requests: EventWriter<
     }
 }
 
-fn load_game(keycode: Res<ButtonInput<KeyCode>>, mut load_requests: EventWriter<LoadingRequest>) {
+fn load_game(keycode: Res<ButtonInput<KeyCode>>, mut load_requests: MessageWriter<LoadingRequest>) {
     if keycode.just_pressed(KeyCode::KeyL) {
         load_requests.write(LoadingRequest {
             path: "scenes/save.scn.ron".into(),

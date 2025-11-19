@@ -284,7 +284,7 @@ pub fn play_animations(
 }
 
 pub fn __react_to_animation_markers(
-    mut animation_marker_events: EventReader<AnimationMarkerReached>,
+    mut animation_marker_events: MessageReader<AnimationMarkerReached>,
 ) {
     for event in animation_marker_events.read() {
         println!("animation marker event {:?}", event)

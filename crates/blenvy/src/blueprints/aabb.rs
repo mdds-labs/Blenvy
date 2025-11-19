@@ -1,4 +1,4 @@
-use bevy::{math::Vec3A, prelude::*, render::primitives::Aabb};
+use bevy::{camera::primitives::Aabb, math::Vec3A, prelude::*};
 
 use crate::{BlenvyConfig, BlueprintReadyForFinalizing, BlueprintReadyForPostProcess};
 

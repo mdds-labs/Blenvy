@@ -18,35 +18,6 @@ use bevy::{
 /// A Bevy plugin for extracting components from gltf files and automatically adding them to the relevant entities
 /// It will automatically run every time you load a gltf file
 /// Add this plugin to your Bevy app to get access to this feature
-/// ```
-/// # use bevy::prelude::*;
-/// # use bevy::gltf::*;
-/// # use blenvy::ComponentsFromGltfPlugin;
-///
-/// //too barebones of an example to be meaningfull, please see https://github.com/kaosat-dev/Blenvy/examples/basic for a real example
-/// fn main() {
-///    App::new()
-///         .add_plugins(DefaultPlugins)
-///         .add_plugin(ComponentsFromGltfPlugin)
-///         .add_system(spawn_level)
-///         .run();
-/// }
-///
-/// fn spawn_level(
-///   asset_server: Res<AssetServer>,
-///   mut commands: bevy::prelude::Commands,
-///   keycode: Res<Input<KeyCode>>,
-
-/// ){
-/// if keycode.just_pressed(KeyCode::Return) {
-///  commands.spawn(SceneBundle {
-///   scene: asset_server.load("basic/models/level1.glb"),
-///   transform: Transform::from_xyz(2.0, 0.0, -5.0),
-/// ..Default::default()
-/// });
-/// }
-///}
-/// ```
 
 /// this is a flag component to tag a processed gltf, to avoid processing things multiple times
 #[derive(Component, Reflect, Default, Debug)]

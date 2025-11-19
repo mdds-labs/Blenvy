@@ -15,8 +15,8 @@ pub(crate) struct AssetToBlueprintInstancesMapper {
 
 #[allow(clippy::too_many_arguments)]
 pub(crate) fn react_to_asset_changes(
-    mut gltf_events: EventReader<AssetEvent<Gltf>>, // FIXME: Problem: we need to react to any asset change, not just gltf files !
-    // mut untyped_events: EventReader<AssetEvent<LoadedUntypedAsset>>,
+    mut gltf_events: MessageReader<AssetEvent<Gltf>>, // FIXME: Problem: we need to react to any asset change, not just gltf files !
+    // mut untyped_events: MessageReader<AssetEvent<LoadedUntypedAsset>>,
     blueprint_assets: Query<(Entity, Option<&Name>, &BlueprintInfo, Option<&Children>)>,
     _blueprint_children_entities: Query<&FromBlueprint>, //=> can only be used if the entites are tagged
     assets_to_blueprint_instances: Res<AssetToBlueprintInstancesMapper>,

@@ -60,8 +60,8 @@ impl Plugin for SaveLoadPlugin {
     fn build(&self, app: &mut App) {
         app.register_type::<Dynamic>()
             .register_type::<StaticEntitiesRoot>()
-            .add_event::<SavingRequest>()
-            .add_event::<SaveFinished>()
+            .add_message::<SavingRequest>()
+            .add_message::<SaveFinished>()
             // common
             .add_systems(Update, (spawn_from_blueprintworld,)) // inject_dynamic_into_children
             // saving
@@ -72,8 +72,8 @@ impl Plugin for SaveLoadPlugin {
                     .chain()
                     .run_if(should_save),
             )
-            .add_event::<LoadingRequest>()
-            .add_event::<LoadingFinished>()
+            .add_message::<LoadingRequest>()
+            .add_message::<LoadingFinished>()
             //loading
             .add_systems(Update, process_load_requests)
             .add_systems(

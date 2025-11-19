@@ -32,10 +32,11 @@ impl CopyComponents {
                 .expect("source entity should exist")
                 .archetype()
                 .components()
+								.into_iter()
                 .filter_map(|component_id| {
                     let component_info = world
                         .components()
-                        .get_info(component_id)
+                        .get_info(*component_id)
                         .expect("component info should be available");
 
                     let type_id = component_info.type_id().unwrap();

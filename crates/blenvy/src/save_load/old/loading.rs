@@ -4,12 +4,12 @@ use std::path::Path;
 
 use crate::{DynamicEntitiesRoot, SaveLoadConfig, StaticEntitiesRoot, StaticEntitiesStorage};
 
-#[derive(Event)]
+#[derive(Message)]
 pub struct LoadingRequest {
     pub path: String,
 }
 
-#[derive(Event)]
+#[derive(Message)]
 pub struct LoadingFinished;
 
 #[derive(Resource, Default)]
@@ -26,7 +26,7 @@ pub(crate) struct CleanupScene;
 
 /// helper system that "converts" loadRequest events to `LoadRequested` resources
 pub(crate) fn mark_load_requested(
-    mut load_requests: EventReader<LoadingRequest>,
+    mut load_requests: MessageReader<LoadingRequest>,
     mut commands: Commands,
 ) {
     let mut save_path: String = "".into();
@@ -94,7 +94,7 @@ pub(crate) fn load_static(
     dynamic_worlds: Query<Entity, With<SceneInstance>>,
     world_root: Query<Entity, With<GameWorldTag>>,
     mut commands: Commands,
-    mut loading_finished: EventWriter<LoadingFinished>,
+    mut loading_finished: MessageWriter<LoadingFinished>,
 
     static_entities: Option<Res<StaticEntitiesStorage>>,
 ) {

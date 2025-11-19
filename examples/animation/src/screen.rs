@@ -99,7 +99,7 @@ fn spawn_world_model(mut commands: Commands) {
 
 // fn move_camera(
 //     time: Res<Time>,
-//     mut mouse_motion: EventReader<MouseMotion>,
+//     mut mouse_motion: MessageReader<MouseMotion>,
 //     input: Res<ButtonInput<KeyCode>>,
 //     mut world_model_projection: Query<&mut Transform, With<ViewCarmera>>,
 //     mut mouse_control_query: Query<&mut MouseControlEnable>,

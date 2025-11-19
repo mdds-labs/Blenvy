@@ -8,15 +8,15 @@ use std::path::Path;
 
 use crate::{DynamicEntitiesRoot, SaveLoadConfig, StaticEntitiesRoot};
 
-#[derive(Event, Debug)]
+#[derive(Message, Debug)]
 pub struct SavingRequest {
     pub path: String,
 }
 
-#[derive(Event)]
+#[derive(Message)]
 pub struct SavingFinished;
 
-pub fn should_save(save_requests: EventReader<SavingRequest>) -> bool {
+pub fn should_save(save_requests: MessageReader<SavingRequest>) -> bool {
     !save_requests.is_empty()
 }
 
@@ -77,7 +77,7 @@ pub(crate) fn save_game(world: &mut World) {
     // info!("saving");
 
     let mut save_path: String = "".into();
-    let mut events = world.resource_mut::<Events<SavingRequest>>();
+    let mut events = world.resource_mut::<Messages<SavingRequest>>();
 
     for event in events.get_reader().read(&events) {
         // info!("SAVE EVENT !! {:?}", event);
@@ -110,10 +110,7 @@ pub(crate) fn save_game(world: &mut World) {
         .allow::<Children>()
         .allow::<BlueprintName>()
         .allow::<SpawnHere>()
-        .allow::<Dynamic>()
-        
-
-        ;
+        .allow::<Dynamic>();
 
     // for root entities, it is the same EXCEPT we make sure parents are not included
     let filter_root = filter.clone().deny::<Parent>();
@@ -121,8 +118,7 @@ pub(crate) fn save_game(world: &mut World) {
     let filter_resources = save_load_config
         .resource_filter
         .clone()
-        .allow::<StaticEntitiesStorage>()
-        ;
+        .allow::<StaticEntitiesStorage>();
 
     // for default stuff
     let scene_builder = DynamicSceneBuilder::from_world(world)
@@ -159,7 +155,7 @@ pub(crate) fn save_game(world: &mut World) {
     let save_path = Path::new("assets")
         .join(&save_load_config.save_path)
         .join(Path::new(save_path.as_str())); // Path::new(&save_load_config.save_path).join(Path::new(save_path.as_str()));
-    // info!("saving game to {:?}", save_path);
+                                              // info!("saving game to {:?}", save_path);
 
     // world.send_event(SavingFinished);
 
@@ -176,7 +172,7 @@ pub(crate) fn save_game(world: &mut World) {
 
 pub(crate) fn cleanup_save(
     needs_parent_reset: Query<(Entity, &OriginalParent)>,
-    mut saving_finished: EventWriter<SavingFinished>,
+    mut saving_finished: MessageWriter<SavingFinished>,
     mut commands: Commands,
 ) {
     for (entity, original_parent) in needs_parent_reset.iter() {

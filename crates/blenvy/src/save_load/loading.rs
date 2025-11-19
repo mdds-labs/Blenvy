@@ -2,12 +2,12 @@ use bevy::prelude::*;
 
 use crate::{BlueprintInfo, DynamicEntitiesRoot, GameWorldTag, HideUntilReady, SpawnBlueprint};
 
-#[derive(Event)]
+#[derive(Message)]
 pub struct LoadingRequest {
     pub path: String,
 }
 
-#[derive(Event)]
+#[derive(Message)]
 pub struct LoadingFinished; // TODO: merge the two above
 
 /// resource that keeps track of the current load request
@@ -30,7 +30,7 @@ General:
     * meh, has no assets & co, different logic ?
 */
 pub fn process_load_requests(
-    mut load_requests: EventReader<LoadingRequest>,
+    mut load_requests: MessageReader<LoadingRequest>,
     mut commands: Commands,
 ) {
     let mut save_path: String = "".into();

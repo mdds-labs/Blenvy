@@ -76,7 +76,7 @@ pub struct AnimationMarkers(pub HashMap<String, HashMap<u32, Vec<String>>>);
 
 /// Event that gets triggered once a specific marker inside an animation has been reached (frame based)
 /// Provides some usefull information about which entity , wich animation, wich frame & which marker got triggered
-#[derive(Event, Debug)]
+#[derive(Message, Debug)]
 pub struct AnimationMarkerReached {
     pub entity: Entity,
     pub animation_name: String,
@@ -97,7 +97,7 @@ pub fn trigger_blueprint_animation_markers_events(
     // FIXME: annoying hiearchy issue yet again: the Markers & AnimationInfos are stored INSIDE the blueprint, so we need to access them differently
     animation_infos: Query<(&AnimationInfos, &AnimationMarkers)>,
     animation_players: Query<&AnimationPlayer>,
-    mut animation_marker_events: EventWriter<AnimationMarkerReached>,
+    mut animation_marker_events: MessageWriter<AnimationMarkerReached>,
 
     animation_clips: Res<Assets<AnimationClip>>,
 ) {
@@ -175,7 +175,7 @@ pub fn trigger_instance_animation_markers_events(
     animation_players: Query<&AnimationPlayer>,
     animation_clips: Res<Assets<AnimationClip>>,
     __animation_graphs: Res<Assets<AnimationGraph>>,
-    mut _animation_marker_events: EventWriter<AnimationMarkerReached>,
+    mut _animation_marker_events: MessageWriter<AnimationMarkerReached>,
 ) {
     for (__entity, __markers, player_link, animations, __animation_infos) in animation_infos.iter()
     {
